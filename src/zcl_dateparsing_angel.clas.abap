@@ -24,11 +24,11 @@ METHOD if_oo_adt_classrun~main.
 
   lo_dateparsing = NEW zcl_dateparsing_angel( ).
 
-  " Text month
+  " string  month (e.g. April, December)
   lv_result = lo_dateparsing->date_parsing( '12 April 2017' ).
   out->write( |Parsed (text month): { lv_result }| ).
 
-  " Numeric month
+  " numbered month (e.g. 4, 12)
   lv_result = lo_dateparsing->date_parsing( '12 4 2017' ).
   out->write( |Parsed (numeric month): { lv_result }| ).
 
@@ -36,11 +36,12 @@ ENDMETHOD.
 
 METHOD date_parsing.
 
-   DATA: lt_parts  TYPE STANDARD TABLE OF string,
+"table of day, month, year split from the input"
+   DATA: lt_parts  TYPE STANDARD TABLE OF string, "holding the string "12" "April" "2017"
         lv_day    TYPE i,
         lv_month  TYPE i,
         lv_year   TYPE i,
-        lv_month_text TYPE string.
+        lv_month_text TYPE string. "if the month is "April"
 
   SPLIT iv_date AT space INTO TABLE lt_parts.
 
@@ -50,7 +51,7 @@ METHOD date_parsing.
 
   TRANSLATE lv_month_text TO UPPER CASE.
 
-  " Try to convert month text to number
+  " string to number"
   lv_month = SWITCH i( lv_month_text
     WHEN `JANUARY`     THEN 1
     WHEN `FEBRUARY`    THEN 2
@@ -64,9 +65,11 @@ METHOD date_parsing.
     WHEN `OCTOBER`     THEN 10
     WHEN `NOVEMBER`    THEN 11
     WHEN `DECEMBER`    THEN 12
-    ELSE lv_month_text  " Assume it's already a number string
-  ).
+    ELSE lv_month_text
+    ).
 
+  
+ "result with added 0 to print correctly"
   rv_result = |{ lv_year WIDTH = 4  ALIGN = RIGHT PAD = '0' }{ lv_month WIDTH = 2  ALIGN = RIGHT PAD = '0' }{ lv_day WIDTH = 2   ALIGN = RIGHT PAD = '0' }|.
 ENDMETHOD.
 
