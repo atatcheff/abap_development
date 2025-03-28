@@ -22,7 +22,7 @@ METHOD if_oo_adt_classrun~main.
   DATA: lv_word TYPE string, " word inputed "
         lv_result TYPE i. "score"
 
-  lv_word = ' hello world' .
+  lv_word = 'alo da maikati da eba' .
   "scoring method"
   lv_result = scrabble_score( iv_word = lv_word ).
 

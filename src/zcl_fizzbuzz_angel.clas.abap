@@ -21,9 +21,7 @@ CLASS zcl_fizzbuzz_angel IMPLEMENTATION.
   DATA lv_temp TYPE string.
 
 
-*loop the numbers 1-100 
     DO 100 TIMES.
-*checks for multiplies of  3 and multiplies of 5
     IF sy-index MOD 3 = 0 AND sy-index MOD 5 = 0.
        lv_temp = 'FizzBuzz'.
 
@@ -34,11 +32,9 @@ CLASS zcl_fizzbuzz_angel IMPLEMENTATION.
            lv_temp = 'Buzz'.
 
           ELSE.
-*sy-index- curr. iteration of the loop          
           lv_temp = |{ sy-index }|.
 
           ENDIF.
-*print result on a newline          
           result = result && lv_temp && cl_abap_char_utilities=>newline.
 
           ENDDO.
